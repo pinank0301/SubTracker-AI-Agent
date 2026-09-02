@@ -104,7 +104,16 @@ def create_app() -> FastAPI:
             message="Subscription Multi-Agent AI Service is running"
         )
 
-    @app.get("/health", response_model=ApiResponse[HealthResponse], tags=["Health"])
+    # =========================================================================
+    # Minimal Health-Check for External Uptime Monitoring (e.g. UptimeRobot)
+    # This endpoint is intentionally ultra-lightweight: no DB, no AI, no auth.
+    # Suitable for pinging every 5 minutes to keep the Render service alive.
+    # =========================================================================
+    @app.get("/health", tags=["Health"])
+    async def health_ping():
+        return {"status": "ok"}
+
+    # Detailed internal health check (includes service metadata)
     @app.get("/api/ai/health", response_model=ApiResponse[HealthResponse], tags=["Health"])
     async def health_check():
         return ApiResponse.ok(

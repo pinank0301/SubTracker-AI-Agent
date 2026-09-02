@@ -8,9 +8,15 @@ client = TestClient(app)
 
 
 def test_health_endpoint():
+    # Test minimal external uptime ping
     response = client.get("/health")
     assert response.status_code == 200
-    data = response.json()
+    assert response.json() == {"status": "ok"}
+
+    # Test detailed internal health check
+    detailed = client.get("/api/ai/health")
+    assert detailed.status_code == 200
+    data = detailed.json()
     assert data["success"] is True
     assert data["data"]["status"] == "UP"
 

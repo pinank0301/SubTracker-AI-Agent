@@ -1,5 +1,5 @@
 import logging
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 # pyrefly: ignore [missing-import]
 from langchain_core.prompts import ChatPromptTemplate
 from app.agents.llm.client import get_chat_llm
