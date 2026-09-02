@@ -109,7 +109,7 @@ def create_app() -> FastAPI:
     # This endpoint is intentionally ultra-lightweight: no DB, no AI, no auth.
     # Suitable for pinging every 5 minutes to keep the Render service alive.
     # =========================================================================
-    @app.get("/health", tags=["Health"])
+    @app.api_route("/health", methods=["GET", "HEAD"], tags=["Health"])
     async def health_ping():
         return {"status": "ok"}
 
